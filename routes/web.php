@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
@@ -22,5 +23,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::middleware(['admin'])->group(function () {
+        Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin');
+    });
+    Route::middleware(['dosen'])->group(function () {
+    });
+    Route::middleware(['mahasiswa'])->group(function () {
+    });
+});
