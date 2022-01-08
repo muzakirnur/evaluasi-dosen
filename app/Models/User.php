@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return '#';
     }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class);
+    }
 }

@@ -275,7 +275,7 @@ return [
         ],
         [
             'text'        => 'Kelola Pertanyaaan',
-            'url'         => 'admin/prodi',
+            'url'         => 'admin/pertanyaan',
             'icon'        => 'fas fa-fw fa-question',
             'label_color' => 'success',
             'can' => 'admin',
@@ -289,7 +289,7 @@ return [
         ],
         [
             'text'        => 'Hasil Evaluasi',
-            'url'         => 'admin/prodi',
+            'url'         => 'admin/hasil',
             'icon'        => 'fas fa-fw fa-poll',
             'label_color' => 'success',
             'can' => 'admin',
