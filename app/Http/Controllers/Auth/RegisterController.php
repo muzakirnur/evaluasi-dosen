@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dosen;
+use App\Models\Mahasiswa;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Ui\AuthRouteMethods;
 
 class RegisterController extends Controller
 {
@@ -73,34 +75,41 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         if ($data['role_id'] == 2) {
+            $user =  User::create([
+                'name' => $data['name'],
+                'nip' => $data['nim'],
+                'prodi_id' => $data['prodi_id'],
+                'role_id' => $data['role_id'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            $userId = $user->id;
+            Dosen::create([
+                'name' => $data['name'],
+                'nip' => $data['nim'],
+                'prodi_id' => $data['prodi_id'],
+                'user_id' => $userId,
+            ]);
 
-            $user = new User();
-            $user->name = $data['name'];
-            $user->nip = $data['nim'];
-            $user->prodi_id = $data['prodi_id'];
-            $user->role_id = $data['role_id'];
-            $user->email = $data['email'];
-            $user->password = Hash::make($data['password']);
-            $user->save();
-
-            $userId = $user->id();
-            dd($userId);
-            // return User::create([
-            //     'name' => $data['name'],
-            //     'nip' => $data['nim'],
-            //     'prodi_id' => $data['prodi_id'],
-            //     'role_id' => $data['role_id'],
-            //     'email' => $data['email'],
-            //     'password' => Hash::make($data['password']),
-            // ]);
-
-            // Dosen::create([
-            //     'name' => $data['name'],
-            //     'nip' => $data['nim'],
-            //     'prodi_id' => $data['prodi_id'],
-            //     'user_id' => DB::getPdo()->insertedId(),
-            // ]);
+            return Auth::login($user);
         }
+        return User::create([
+            'name' => $data['name'],
+            'nim' => $data['nim'],
+            'prodi_id' => $data['prodi_id'],
+            'role_id' => $data['role_id'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        $id = User::latest()->first()->id;
+        dd($id);
+        Mahasiswa::create([
+            'name' => $data['name'],
+            'nim' => $data['nim'],
+            'prodi_id' => $data['prodi_id'],
+            'user_id' => $id,
+        ]);
         // $userId = $user->id();
         // return redirect()->route('login')->with('success', 'Registrasi Berhasil, Silahkan login');
     }
