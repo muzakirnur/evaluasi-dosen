@@ -46,6 +46,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
     public function adminlte_image()
     {
         $profile = Auth::user()->avatar;
@@ -54,8 +59,8 @@ class User extends Authenticatable
 
     public function adminlte_desc()
     {
-        $name = Auth::user()->name;
-        return 'Selamat Datang ' . $name;
+        $jurusan = Auth::user()->prodi->name;
+        return $jurusan;
     }
 
     public function adminlte_profile_url()

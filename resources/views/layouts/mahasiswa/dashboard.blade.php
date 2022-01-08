@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('layouts.dosen.app')
 
 @section('content')
     <p>Selamat Datang {{ Auth::user()->name }}</p>

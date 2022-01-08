@@ -10,6 +10,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('layouts.admin.app');
+        $page = "Dashboard Admin";
+        return view('layouts.admin.dashboard', compact('page'));
     }
 }

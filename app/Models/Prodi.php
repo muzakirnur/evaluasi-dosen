@@ -9,4 +9,9 @@ class Prodi extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function user()
+    {
+        $this->hasMany(User::class);
+    }
 }
