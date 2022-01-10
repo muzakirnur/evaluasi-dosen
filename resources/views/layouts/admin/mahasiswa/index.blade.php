@@ -29,14 +29,13 @@
                     <td>{{ $row->nim }}</td>
                     <td>{{ $row->prodi->name }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary">
-                            <i class="fas fa-fw fa-eye"></i>
-                        </a>
-                        <form action="{{ route('admin-mahasiswa.destroy', $row->id) }}">
-                            <button class="btn btn-danger" onclick="window.confirm()">
-                                <i class="fas fa-fw fa-trash"></i>
-                            </button>
-                        </form>
+                        <div class="row row-cols-5">
+                            <div class="col">
+                                <a href="{{ route('admin-mahasiswa.show', $row->id) }}" class="btn btn-primary">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

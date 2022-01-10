@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function adminlte_profile_url()
     {
-        return '#';
+        return route('profile.index');
     }
 
     public function mahasiswa()

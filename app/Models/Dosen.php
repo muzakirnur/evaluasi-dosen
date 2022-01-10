@@ -10,4 +10,14 @@ class Dosen extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function hasil()
+    {
+        return $this->hasMany(Hasil::class);
+    }
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
 }

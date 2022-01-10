@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -45,6 +46,8 @@ class AppServiceProvider extends ServiceProvider
             }
             return false;
         });
+
+        Paginator::useBootstrap();
         // Gate::define('dosen', function ($user) {
         //     if ($user->role_id == '2') {
         //         return true;

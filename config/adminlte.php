@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => 'Evaluasi Dosen',
-    'logo_img' => asset('img/logounimal.png'),
+    'logo_img' => 'img/logounimal.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -69,7 +69,7 @@ return [
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => true,
     'usermenu_desc' => true,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -123,7 +123,7 @@ return [
 
     'classes_body' => '',
     'classes_brand' => '',
-    'classes_brand_text' => '',
+    'classes_brand_text' => 'navbar-brand',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
@@ -246,9 +246,30 @@ return [
         //     'can'  => 'manage-blog',
         // ],
         [
+            'text'        => 'Dashboard',
+            'url'         => 'admin/dashboard',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'label_color' => 'success',
+            'can' => 'admin',
+        ],
+        [
+            'text'        => 'Dashboard',
+            'url'         => 'dosen/dashboard',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'label_color' => 'success',
+            'can' => 'dosen',
+        ],
+        [
+            'text'        => 'Dashboard',
+            'url'         => 'mahasiswa/dashboard',
+            'icon'        => 'fas fa-fw fa-tachometer-alt',
+            'label_color' => 'success',
+            'can' => 'mahasiswa',
+        ],
+        [
             'text'        => 'Hasil Evaluasi',
-            'url'         => 'admin/mahasiswa',
-            'icon'        => 'fas fa-fw fa-users',
+            'url'         => 'dosen/kuisioner',
+            'icon'        => 'fas fa-fw fa-file',
             'label_color' => 'success',
             'can' => 'dosen',
         ],
@@ -282,7 +303,7 @@ return [
         ],
         [
             'text'        => 'Kuisioner',
-            'url'         => 'admin/prodi',
+            'url'         => 'mahasiswa/kuisioner',
             'icon'        => 'fas fa-fw fa-question',
             'label_color' => 'success',
             'can' => 'mahasiswa',

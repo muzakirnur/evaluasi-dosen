@@ -26,19 +26,28 @@
                     <th>{{ $loop->iteration }}</th>
                     <td>{{ $row->question }}</td>
                     <td>
-                        <div class="row g-3">
-                            <a href="#" class="btn btn-primary">
-                                <i class="fas fa-fw fa-eye"></i>
-                            </a>
-                            <form action="{{ route('admin-mahasiswa.destroy', $row->id) }}">
-                                <button class="btn btn-danger" onclick="window.confirm()">
-                                    <i class="fas fa-fw fa-trash"></i>
-                                </button>
-                            </form>
+                        <div class="row row-cols-3">
+                            <div class="col">
+                                <a href="#" class="btn btn-primary">
+                                    <i class="fas fa-fw fa-eye"></i>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <form action="{{ route('admin-pertanyaan.destroy', $row->id) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-danger"
+                                        onclick="window.confirm('Apakah yakin ingin Menghapus ?')">
+                                        <i class="fas fa-fw fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="mb-3">
+        {{ $data->links() }}
+    </div>
 @endsection

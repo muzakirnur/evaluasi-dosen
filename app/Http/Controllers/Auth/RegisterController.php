@@ -8,13 +8,9 @@ use App\Models\Mahasiswa;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Client\Request as ClientRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Ui\AuthRouteMethods;
 
 class RegisterController extends Controller
 {
@@ -90,10 +86,9 @@ class RegisterController extends Controller
                 'prodi_id' => $data['prodi_id'],
                 'user_id' => $userId,
             ]);
-
-            return Auth::login($user);
+            return $user;
         }
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'nim' => $data['nim'],
             'prodi_id' => $data['prodi_id'],
@@ -103,13 +98,14 @@ class RegisterController extends Controller
         ]);
 
         $id = User::latest()->first()->id;
-        dd($id);
         Mahasiswa::create([
             'name' => $data['name'],
             'nim' => $data['nim'],
             'prodi_id' => $data['prodi_id'],
             'user_id' => $id,
         ]);
+        return $user;
+
         // $userId = $user->id();
         // return redirect()->route('login')->with('success', 'Registrasi Berhasil, Silahkan login');
     }

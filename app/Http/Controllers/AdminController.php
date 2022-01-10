@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use App\Models\Hasil;
 use App\Models\Mahasiswa;
 use App\Models\Pertanyaan;
@@ -16,7 +17,11 @@ class AdminController extends Controller
     public function index()
     {
         $page = "Dashboard Admin";
-        return view('layouts.admin.dashboard', compact('page'));
+        $mahasiswa = Mahasiswa::count();
+        $pertanyaan = Pertanyaan::count();
+        $hasil = Hasil::count();
+        $dosen = Dosen::count();
+        return view('layouts.admin.dashboard', compact('page', 'pertanyaan', 'mahasiswa', 'hasil', 'dosen'));
     }
 
     // Fungsi Kelola Mahasiswa
@@ -24,14 +29,23 @@ class AdminController extends Controller
     public function mahasiswa_index()
     {
         $page = "Kelola Mahasiswa";
-        $data = Mahasiswa::all();
+        $data = Mahasiswa::paginate(10);
         return view('layouts.admin.mahasiswa.index', compact('page', 'data'));
     }
 
     public function mahasiswa_delete($id)
     {
-        User::destroy($id);
+        Mahasiswa::destroy($id);
         return redirect()->back()->with('success', 'Data Mahasiswa Berhasil dihapus');
+    }
+
+    public function mahasiswa_show($id)
+    {
+        $page = "Detail Mahasiswa";
+        $mhs = Mahasiswa::find($id);
+        $user = User::where('id', $mhs->user_id)->first();
+        $data = Hasil::where('mahasiswa_id', $mhs->id)->paginate(10);
+        return view('layouts.admin.mahasiswa.show', compact('mhs', 'user', 'data', 'page'));
     }
 
     // Fungsi Kelola Dosen
@@ -39,8 +53,17 @@ class AdminController extends Controller
     public function dosen_index()
     {
         $page = "Kelola Dosen";
-        $data = User::all()->whereNotNull('nip');
+        $data = Dosen::paginate(10);
         return view('layouts.admin.dosen.index', compact('page', 'data'));
+    }
+
+    public function dosen_show($id)
+    {
+        $page = "Detail Dosen";
+        $dosen = Dosen::find($id);
+        $user = User::where('id', $dosen->user_id)->first();
+        $data = Hasil::where('dosen_id', $dosen->id)->paginate(10);
+        return view('layouts.admin.dosen.show', compact('page', 'dosen', 'data', 'user'));
     }
 
     // Fungsi Kelola Pertanyaan
@@ -48,7 +71,7 @@ class AdminController extends Controller
     public function pertanyaan_index()
     {
         $page = "Kelola Pertanyaan";
-        $data = Pertanyaan::all();
+        $data = Pertanyaan::paginate(10);
         return view('layouts.admin.pertanyaan.index', compact('page', 'data'));
     }
 
@@ -66,13 +89,25 @@ class AdminController extends Controller
         return redirect()->route('admin-pertanyaan.index')->with('success', 'Pertanyaan Berhasil ditambahkan');
     }
 
+    public function pertanyaan_destroy($id)
+    {
+        Pertanyaan::destroy($id);
+        return redirect()->back()->with('successs', 'Pertanyaan Berhasil dihapus');
+    }
+
     // Fungsi untuk Hasil Evaluasi
 
     public function hasil_index()
     {
         $page = "Hasil Evaluasi Dosen";
-        $data = Hasil::all();
+        $data = Hasil::paginate(10);
         return view('layouts.admin.hasil.index', compact('page', 'data'));
+    }
+
+    public function hasil_destroy($id)
+    {
+        Hasil::destroy($id);
+        return redirect()->route('admin-hasil.index')->with('success', 'Data Berhasil dihapus');
     }
 
     // Fungsi Kelola Prodi
@@ -80,8 +115,16 @@ class AdminController extends Controller
     public function prodi_index()
     {
         $page = "Kelola Program Studi";
-        $data = Prodi::all();
+        $data = Prodi::paginate(10);
         return view('layouts.admin.prodi.index', compact('page', 'data'));
+    }
+
+    public function prodi_show($id)
+    {
+        $prodi = Prodi::find($id);
+        $data = Dosen::where('prodi_id', $prodi->id)->paginate(10);
+        $page = "Daftar Dosen " . $prodi->name;
+        return view('layouts.admin.prodi.show', compact('page', 'prodi', 'data'));
     }
 
     public function prodi_create()
@@ -96,5 +139,13 @@ class AdminController extends Controller
             'name' => $request->name,
         ]);
         return redirect()->route('admin-prodi.index')->with('success', 'Program Studi Berhasil ditambahkan');
+    }
+
+    public function chart($id)
+    {
+        $dosen = Dosen::find($id);
+        $chart = Hasil::all()->where('dosen_id', $dosen->id);
+
+        return response()->json($chart);
     }
 }

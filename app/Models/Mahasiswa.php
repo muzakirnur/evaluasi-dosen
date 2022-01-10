@@ -19,4 +19,9 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Prodi::class);
     }
+
+    public function hasil()
+    {
+        return $this->belongsTo(Hasil::class);
+    }
 }
