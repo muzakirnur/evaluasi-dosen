@@ -13,8 +13,10 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
+        $mahasiswa = Mahasiswa::Where('user_id', Auth::user()->id)->first();
+        $data = Hasil::all()->where('mahasiswa_id', $mahasiswa->id);
         $page = "Dashboard Mahasiswa";
-        return view('layouts.mahasiswa.dashboard', compact('page'));
+        return view('layouts.mahasiswa.dashboard', compact('page', 'data'));
     }
 
     public function kuisioner_index()

@@ -29,19 +29,10 @@
                     <td>{{ $row->nilai }}</td>
                     <td>{{ $row->saran }}</td>
                     <td>
-                        <div class="row row-cols-3">
-                            <div class="col">
-                                <a href="#" class="btn btn-primary">
-                                    <i class="fas fa-fw fa-eye"></i>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <form action="{{ route('admin-hasil.destroy', $row->id) }}">
-                                    <button class="btn btn-danger" onclick="window.confirm()">
-                                        <i class="fas fa-fw fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
+                        <div class="col">
+                            <a href="{{ route('admin-hasil.show', $row->id) }}" class="btn btn-primary">
+                                <i class="fas fa-fw fa-eye"></i>
+                            </a>
                         </div>
                     </td>
                 </tr>

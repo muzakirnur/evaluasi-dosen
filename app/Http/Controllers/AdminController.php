@@ -63,7 +63,23 @@ class AdminController extends Controller
         $dosen = Dosen::find($id);
         $user = User::where('id', $dosen->user_id)->first();
         $data = Hasil::where('dosen_id', $dosen->id)->paginate(10);
-        return view('layouts.admin.dosen.show', compact('page', 'dosen', 'data', 'user'));
+        $chart = Hasil::all()->where('dosen_id', $dosen->id);
+        foreach ($chart as $n) {
+            $jlhNilai = $n->nilai;
+        }
+        $sangatBaik = $jlhNilai == 10;
+        $baik = $jlhNilai <= 9.9;
+        $cukup = $jlhNilai <= 8.9;
+        $kurangBaik = $jlhNilai <= 7.9;
+        $sangatKurangBaik = $jlhNilai <= 6.9;
+
+        $dataSb = $chart->where('nilai', 10)->count();
+        $dataB = $chart->whereBetween('nilai', [9, 9.9])->count();
+        $dataC = $chart->whereBetween('nilai', [8, 8.9])->count();
+        $dataKb = $chart->whereBetween('nilai', [7, 7.9])->count();
+        $dataSkb = $chart->whereBetween('nilai', [6, 6.9])->count();
+        // dd($sangatBaik);
+        return view('layouts.admin.dosen.show', compact('page', 'dosen', 'data', 'user', 'dataSb', 'dataB', 'dataC', 'dataKb', 'dataSkb'));
     }
 
     // Fungsi Kelola Pertanyaan
@@ -89,6 +105,19 @@ class AdminController extends Controller
         return redirect()->route('admin-pertanyaan.index')->with('success', 'Pertanyaan Berhasil ditambahkan');
     }
 
+    public function pertanyaan_show($id)
+    {
+        $page = "Perbarui Pertanyaan";
+        $data = Pertanyaan::find($id);
+        return view('layouts.admin.pertanyaan.show', compact('data', 'page'));
+    }
+
+    public function pertanyaan_update($id, Request $request)
+    {
+        Pertanyaan::find($id)->update($request->all());
+        return redirect()->route('admin-pertanyaan.index')->with('success', 'Pertanyaan Berhasil di Update');
+    }
+
     public function pertanyaan_destroy($id)
     {
         Pertanyaan::destroy($id);
@@ -102,6 +131,13 @@ class AdminController extends Controller
         $page = "Hasil Evaluasi Dosen";
         $data = Hasil::paginate(10);
         return view('layouts.admin.hasil.index', compact('page', 'data'));
+    }
+
+    public function hasil_show($id)
+    {
+        $page = "Detail Hasil Evaluasi";
+        $data = Hasil::find($id);
+        return view('layouts.admin.hasil.show', compact('page', 'data'));
     }
 
     public function hasil_destroy($id)
@@ -141,11 +177,14 @@ class AdminController extends Controller
         return redirect()->route('admin-prodi.index')->with('success', 'Program Studi Berhasil ditambahkan');
     }
 
+    public function prodi_destroy($id)
+    {
+        Prodi::destroy($id);
+        return redirect()->route('admin-prodi.index')->with('success', 'Program Studi Berhasil dihapus');
+    }
+
     public function chart($id)
     {
-        $dosen = Dosen::find($id);
-        $chart = Hasil::all()->where('dosen_id', $dosen->id);
-
-        return response()->json($chart);
+        // $dosen = Dosen::find($id);
     }
 }

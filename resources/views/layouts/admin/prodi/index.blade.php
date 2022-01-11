@@ -33,11 +33,15 @@
                                 </a>
                             </div>
                             <div class="col">
-                                <form action="{{ route('admin-mahasiswa.destroy', $row->id) }}">
-                                    <button class="btn btn-danger" onclick="window.confirm()">
+                                <a class="btn btn-danger" onclick="return confirm('Are you sure?')"
+                                    href="{{ route('admin-prodi.destroy', $row->id) }}"><i
+                                        class="fas fa-fw fa-trash"></i></a>
+                                {{-- <form action="{{ route('admin-prodi.destroy', $row->id) }}">
+                                    <button class="btn btn-danger"
+                                        onclick="window.confirm('Apakah Anda Yakin ingin menghapus Prodi ini ?')">
                                         <i class="fas fa-fw fa-trash"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </td>

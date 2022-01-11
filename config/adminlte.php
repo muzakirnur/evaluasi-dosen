@@ -66,7 +66,7 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-primary',
+    'usermenu_header_class' => 'bg-primary bg-gradient',
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
@@ -269,7 +269,7 @@ return [
         [
             'text'        => 'Hasil Evaluasi',
             'url'         => 'dosen/kuisioner',
-            'icon'        => 'fas fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-chart-bar',
             'label_color' => 'success',
             'can' => 'dosen',
         ],
@@ -437,6 +437,16 @@ return [
                 ],
             ],
         ],
+        'BsCustomFileInput' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
+                ],
+            ],
+        ],
         'Select2' => [
             'active' => false,
             'files' => [
@@ -453,11 +463,11 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
                 ],
             ],

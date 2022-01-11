@@ -40,7 +40,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Mahasiswa</th>
+                <th scope="col">Dosen</th>
                 <th scope="col">Program Studi</th>
                 <th scope="col">Nilai</th>
                 <th scope="col">Saran</th>
@@ -71,6 +71,7 @@
     <div class="mb-3">
         {{ $data->links() }}
     </div>
+    <button class="btn btn-primary" onclick="history.back(-1)"><i class="fas fa-fw fa-arrow-left"></i> Kembali</button>
 
 
 

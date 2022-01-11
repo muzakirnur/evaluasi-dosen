@@ -22,23 +22,5 @@ class UserSeeder extends Seeder
             'prodi_id' => '8',
             'password' => bcrypt('password'),
         ]);
-
-        User::create([
-            'name' => 'Desvina Yulisda',
-            'email' => 'desvina@gmail.com',
-            'nip' => '124714014012712',
-            'role_id' => '2',
-            'prodi_id' => '8',
-            'password' => bcrypt('password'),
-        ]);
-
-        User::create([
-            'name' => 'Muzakir Nur',
-            'email' => 'muzakirnur@gmail.com',
-            'nim' => '180180101',
-            'role_id' => '3',
-            'prodi_id' => '8',
-            'password' => bcrypt('password'),
-        ]);
     }
 }

@@ -28,18 +28,21 @@
                     <td>
                         <div class="row row-cols-3">
                             <div class="col">
-                                <a href="#" class="btn btn-primary">
+                                <a href="{{ route('admin-pertanyaan.show', $row->id) }}" class="btn btn-primary">
                                     <i class="fas fa-fw fa-eye"></i>
                                 </a>
                             </div>
                             <div class="col">
-                                <form action="{{ route('admin-pertanyaan.destroy', $row->id) }}" method="POST">
+                                <a class="btn btn-danger" onclick="return confirm('Are you sure?')"
+                                    href="{{ route('admin-pertanyaan.destroy', $row->id) }}"><i
+                                        class="fas fa-fw fa-trash"></i></a>
+                                {{-- <form action="{{ route('admin-pertanyaan.destroy', $row->id) }}" method="POST">
                                     @csrf
                                     <button class="btn btn-danger"
                                         onclick="window.confirm('Apakah yakin ingin Menghapus ?')">
                                         <i class="fas fa-fw fa-trash"></i>
                                     </button>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </td>
