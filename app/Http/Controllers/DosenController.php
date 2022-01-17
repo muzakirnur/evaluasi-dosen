@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\HasilExport;
 use App\Models\Dosen;
 use App\Models\Hasil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DosenController extends Controller
 {
@@ -40,7 +43,13 @@ class DosenController extends Controller
         $dataKb = $chart->whereBetween('nilai', [7, 7.9])->count();
         $dataSkb = $chart->whereBetween('nilai', [6, 6.9])->count();
         // Menampilkan Data Hasil Evaluasi
-        $data = Hasil::where('dosen_id', $dosenId->id)->paginate(5);
+        $data = Hasil::where('dosen_id', $dosenId->id)->paginate(10);
         return view('layouts.dosen.kuisioner.index', compact('page', 'data', 'dataSb', 'dataB', 'dataC', 'dataKb', 'dataSkb'));
+    }
+
+    public function export()
+    {
+        $dosen = Dosen::where('user_id', Auth::user()->id)->get();
+        return (new HasilExport)->dosenId($dosen[0]->id)->download('hasil_evaluasi.xlsx');
     }
 }

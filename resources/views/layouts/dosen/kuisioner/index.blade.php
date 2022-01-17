@@ -7,50 +7,53 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <div class="card card-danger">
-        <div class="card-header">
-            <h3 class="card-title">Chart Penilaian Dosen</h3>
+    <div class="row row-cols-2 g-5">
+        <div class="col">
+            <a href="{{ route('dosen.export') }}" class="btn btn-primary mb-3">Download</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nilai</th>
+                        <th scope="col">Saran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $row)
+                        <tr>
+                            <th>{{ $loop->iteration }}</th>
+                            <td> {{ $row->nilai }}</td>
+                            <td> {{ $row->saran }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $data->links() }}
+        </div>
+        <div class="col">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Chart Penilaian Dosen</h3>
 
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                </button>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="donutChart"
+                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+                <!-- /.card-body -->
             </div>
         </div>
-        <div class="card-body">
-            <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-        </div>
-        <!-- /.card-body -->
+
     </div>
-    <hr>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Mahasiswa</th>
-                <th scope="col">NIM</th>
-                <th scope="col">Program Studi</th>
-                <th scope="col">Nilai</th>
-                <th scope="col">Saran</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($data as $row)
-                <tr>
-                    <th>{{ $loop->iteration }}</th>
-                    <td>{{ $row->mahasiswa->name }}</td>
-                    <td>{{ $row->mahasiswa->nim }}</td>
-                    <td>{{ $row->mahasiswa->prodi->name }}</td>
-                    <td> {{ $row->nilai }}</td>
-                    <td> {{ $row->saran }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    {{ $data->links() }}
+
 @endsection
 @section('js')
     <script>

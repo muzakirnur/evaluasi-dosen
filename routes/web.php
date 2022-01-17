@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         // Routes Kelola Dosen
         Route::get('admin/dosen', [AdminController::class, 'dosen_index'])->name('admin-dosen.index');
         Route::get('admin/dosen/{id}', [AdminController::class, 'dosen_show'])->name('admin-dosen.show');
+        Route::get('admin/dosen/{id}/export', [AdminController::class, 'export'])->name('admin-dosen.export');
         // Routes Kelola Pertanyaan
         Route::get('admin/pertanyaan', [AdminController::class, 'pertanyaan_index'])->name('admin-pertanyaan.index');
         Route::get('admin/pertanyaan/detail/{id}', [AdminController::class, 'pertanyaan_show'])->name('admin-pertanyaan.show');
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['dosen'])->group(function () {
         Route::get('dosen/dashboard', [DosenController::class, 'index'])->name('dosen');
+        Route::get('dosen/kuisioner/export', [DosenController::class, 'export'])->name('dosen.export');
         // Routes Kelola Hasil Kuisioner
         Route::get('dosen/kuisioner', [DosenController::class, 'kuisioner_index'])->name('dosen-kuisioner.index');
     });

@@ -9,8 +9,8 @@ use App\Models\Pertanyaan;
 use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Profiler\Profile;
+use App\Exports\HasilExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -183,8 +183,9 @@ class AdminController extends Controller
         return redirect()->route('admin-prodi.index')->with('success', 'Program Studi Berhasil dihapus');
     }
 
-    public function chart($id)
+    public function export($id)
     {
-        // $dosen = Dosen::find($id);
+        $dosen = Dosen::find($id);
+        return (new HasilExport)->dosenId($dosen->id)->download('hasil_dosen.xlsx');
     }
 }

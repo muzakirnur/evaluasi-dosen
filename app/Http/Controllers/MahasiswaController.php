@@ -39,7 +39,10 @@ class MahasiswaController extends Controller
 
     public function kuisioner_save(Request $request)
     {
+
+
         $data = $request->data;
+
         $total = array_sum($data);
         $jumlah = count($data);
 
