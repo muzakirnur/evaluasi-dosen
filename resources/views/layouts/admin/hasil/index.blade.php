@@ -7,6 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    <a href="{{ route('admin-hasil.download') }}" class="btn btn-primary mb-3">Download</a>
     <table class="table">
         <thead>
             <tr>

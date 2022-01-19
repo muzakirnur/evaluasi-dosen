@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/prodi/delete/{id}', [AdminController::class, 'prodi_destroy'])->name('admin-prodi.destroy');
         // Route Kelola Hasil Evaluasi
         Route::get('admin/hasil', [AdminController::class, 'hasil_index'])->name('admin-hasil.index');
+        Route::get('admin/hasil/export', [AdminController::class, 'exportall'])->name('admin-hasil.download');
         Route::get('admin/hasil/{id}', [AdminController::class, 'hasil_show'])->name('admin-hasil.show');
         Route::get('admin/hasil/delete/{id}', [AdminController::class, 'hasil_destroy'])->name('admin-hasil.destroy');
     });

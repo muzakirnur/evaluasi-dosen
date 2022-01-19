@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Ev;
+use App\Exports\EvaluasiExport;
 use App\Models\Dosen;
 use App\Models\Hasil;
 use App\Models\Mahasiswa;
@@ -187,5 +189,10 @@ class AdminController extends Controller
     {
         $dosen = Dosen::find($id);
         return (new HasilExport)->dosenId($dosen->id)->download('hasil_dosen.xlsx');
+    }
+
+    public function exportall()
+    {
+        return Excel::download(new EvaluasiExport, 'evaluasi.xlsx');
     }
 }
