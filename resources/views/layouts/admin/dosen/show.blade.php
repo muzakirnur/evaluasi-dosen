@@ -45,6 +45,7 @@
                         <th scope="col">No</th>
                         <th scope="col">Nilai</th>
                         <th scope="col">Saran</th>
+                        <th scope="col">Grade</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
                             <th>{{ $loop->iteration }}</th>
                             <td>{{ $row->nilai }}</td>
                             <td>{{ $row->saran }}</td>
+                            <td>{{ $row->grade }}</td>
                             <td>
                                 <div class="row row-cols-3">
                                     <div class="col">

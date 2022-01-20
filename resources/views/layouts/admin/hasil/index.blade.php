@@ -17,6 +17,7 @@
                 <th scope="col">Dosen</th>
                 <th scope="col">Nilai</th>
                 <th scope="col">Saran</th>
+                <th scope="col">Grade</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                     <td>{{ $row->dosen->name }}</td>
                     <td>{{ $row->nilai }}</td>
                     <td>{{ $row->saran }}</td>
+                    <td>{{ $row->grade }}</td>
                     <td>
                         <div class="col">
                             <a href="{{ route('admin-hasil.show', $row->id) }}" class="btn btn-primary">
