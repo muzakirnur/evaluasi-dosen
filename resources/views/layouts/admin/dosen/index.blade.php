@@ -23,7 +23,7 @@
         <tbody>
             @foreach ($data as $row)
                 <tr>
-                    <th>{{ $loop->iteration }}</th>
+                    <th>{{ ($data->currentpage() - 1) * $data->perpage() + $loop->index + 1 }}</th>
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->nip }}</td>
                     <td>{{ $row->prodi->name }}</td>

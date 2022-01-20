@@ -24,7 +24,7 @@
         <tbody>
             @foreach ($data as $row)
                 <tr>
-                    <th>{{ $loop->iteration }}</th>
+                    <th>{{ ($data->currentpage() - 1) * $data->perpage() + $loop->index + 1 }}</th>
                     <td>{{ $row->mahasiswa->name }}</td>
                     <td>{{ $row->mahasiswa->prodi->name }}</td>
                     <td>{{ $row->dosen->name }}</td>
