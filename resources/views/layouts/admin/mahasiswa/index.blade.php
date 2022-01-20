@@ -22,9 +22,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($data as $row)
+            @foreach ($data as $key => $row)
                 <tr>
-                    <th>{{ ($data->currentpage() - 1) * $data->perpage() + $loop->index + 1 }}</th>
+                    <th>{{ $data->firstItem() + $key }}</th>
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->nim }}</td>
                     <td>{{ $row->prodi->name }}</td>
