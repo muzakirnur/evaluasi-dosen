@@ -53,12 +53,24 @@ class MahasiswaController extends Controller
         $idmhs = Mahasiswa::where('user_id', $idusr)->first('id');
         // dd($idmhs);
 
+        if ($nilai <= 6.9) {
+            $grade = "Sangat Kurang Baik";
+        } else if ($nilai <= 7.9) {
+            $grade = "Kurang Baik";
+        } else if ($nilai <= 8.9) {
+            $grade = "Cukup";
+        } else if ($nilai <= 9.9) {
+            $grade = "Baik";
+        } else if ($nilai == 10) {
+            $grade = "Sangat Baik";
+        }
 
         Hasil::create([
             'mahasiswa_id' => $idmhs->id,
             'dosen_id' => $request->dosen_id,
             'nilai' => $nilai,
-            'saran' => $request->saran
+            'saran' => $request->saran,
+            'grade' => $grade
         ]);
 
         return redirect()->route('mahasiswa-kuisioner.index')->with('success', 'Data Penilaian Berhasil ditambahkan');

@@ -21,6 +21,7 @@ class CreateHasilsTable extends Migration
             $table->foreign('dosen_id')->references('id')->on('dosens')->onDelete('cascade')->onUpdate('cascade');
             $table->float('nilai');
             $table->longText('saran');
+            $table->string('grade');
             $table->timestamps();
         });
     }
