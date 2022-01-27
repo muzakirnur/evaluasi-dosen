@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\Ev;
 use App\Exports\EvaluasiExport;
 use App\Models\Dosen;
 use App\Models\Hasil;
@@ -12,7 +11,9 @@ use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Exports\HasilExport;
+use Illuminate\Support\Facades\App;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -194,5 +195,14 @@ class AdminController extends Controller
     public function exportall()
     {
         return Excel::download(new EvaluasiExport, 'evaluasi.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $page = "Data Dosen";
+        $data = Dosen::all();
+        $pdf = PDF::loadView('layouts.pdf.index', compact('data', 'page'));
+        // dd($pdf);
+        return $pdf->download('dosen.pdf');
     }
 }

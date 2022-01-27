@@ -10,6 +10,7 @@
             </button>
         </div>
     @endif
+    <a href="{{ route('export.pdf') }}" class="btn btn-danger mb-3">Export PDF</a>
     <table class="table">
         <thead>
             <tr>

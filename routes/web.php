@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'profile_index'])->name('profile.index');
     Route::put('profile/update/{id}', [ProfileController::class, 'profile_update'])->name('profile.update');
     Route::get('chart', [AdminController::class, 'chart'])->name('chart.index');
+    Route::get('pdf', [AdminController::class, 'exportPdf'])->name('export.pdf');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin');
