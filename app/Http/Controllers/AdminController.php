@@ -197,12 +197,30 @@ class AdminController extends Controller
         return Excel::download(new EvaluasiExport, 'evaluasi.xlsx');
     }
 
-    public function exportPdf()
+    public function exportDosen()
     {
         $page = "Data Dosen";
         $data = Dosen::all();
-        $pdf = PDF::loadView('layouts.pdf.index', compact('data', 'page'));
+        $pdf = PDF::loadView('layouts.pdf.dosen', compact('data', 'page'));
         // dd($pdf);
         return $pdf->download('dosen.pdf');
+    }
+
+    public function exportHasil()
+    {
+        $page = "Data Hasil Evaluasi";
+        $data = Hasil::all();
+        $pdf = PDF::loadView('layouts.pdf.hasil', compact('data', 'page'));
+        // dd($pdf);
+        return $pdf->download('hasil.pdf');
+    }
+
+    public function exportMahasiswa()
+    {
+        $page = "Data Mahasiswa";
+        $data = Mahasiswa::all();
+        $pdf = PDF::loadView('layouts.pdf.mahasiswa', compact('data', 'page'));
+        // dd($pdf);
+        return $pdf->download('mahasiswa.pdf');
     }
 }

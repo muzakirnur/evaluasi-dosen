@@ -32,7 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'profile_index'])->name('profile.index');
     Route::put('profile/update/{id}', [ProfileController::class, 'profile_update'])->name('profile.update');
     Route::get('chart', [AdminController::class, 'chart'])->name('chart.index');
-    Route::get('pdf', [AdminController::class, 'exportPdf'])->name('export.pdf');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin');
@@ -44,6 +43,13 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/dosen', [AdminController::class, 'dosen_index'])->name('admin-dosen.index');
         Route::get('admin/dosen/{id}', [AdminController::class, 'dosen_show'])->name('admin-dosen.show');
         Route::get('admin/dosen/{id}/export', [AdminController::class, 'export'])->name('admin-dosen.export');
+        // Route Kelola PDF
+
+        Route::get('admin/pdf/dosen', [AdminController::class, 'exportDosen'])->name('export-pdf.dosen');
+        Route::get('admin/pdf/hasil', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
+        Route::get('admin/pdf/mahasiswa', [AdminController::class, 'exportMahasiswa'])->name('export-pdf.mahasiswa');
+
+
         // Routes Kelola Pertanyaan
         Route::get('admin/pertanyaan', [AdminController::class, 'pertanyaan_index'])->name('admin-pertanyaan.index');
         Route::get('admin/pertanyaan/detail/{id}', [AdminController::class, 'pertanyaan_show'])->name('admin-pertanyaan.show');

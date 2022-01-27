@@ -8,6 +8,7 @@
         </div>
     @endif
     <a href="{{ route('admin-hasil.download') }}" class="btn btn-primary mb-3">Download</a>
+    <a href="{{ route('export-pdf.hasil') }}" class="btn btn-danger mb-3">Export PDF</a>
     <table class="table">
         <thead>
             <tr>
