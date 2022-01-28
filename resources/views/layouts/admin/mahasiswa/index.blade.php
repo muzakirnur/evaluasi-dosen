@@ -42,4 +42,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="mb-3">
+        {{ $data->links() }}
+    </div>
 @endsection
