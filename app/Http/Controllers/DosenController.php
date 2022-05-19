@@ -5,20 +5,24 @@ namespace App\Http\Controllers;
 use App\Exports\HasilExport;
 use App\Models\Dosen;
 use App\Models\Hasil;
+use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+
+use function PHPUnit\Framework\isEmpty;
 
 class DosenController extends Controller
 {
     public function index()
     {
         $dosenId = Dosen::where('user_id', Auth::user()->id)->first();
-
-        $hasil = Hasil::all()->where('dosen_id', $dosenId->id);
+        $matakuliah = Matakuliah::all()->where('dosen_id', $dosenId->id);
+        $hasil = Hasil::all()->where('matakuliah_id', $matakuliah->dosen_id);
+        // dd($hasil);
         $page = "Dashboard Dosen";
-        return view('layouts.dosen.dashboard', compact('page', 'hasil'));
+        return view('layouts.dosen.dashboard', compact('page', 'hasil', 'matakuliah'));
     }
 
     public function kuisioner_index()
@@ -28,8 +32,13 @@ class DosenController extends Controller
         $dosenId = Dosen::where('user_id', $auth)->first();
         // Menampilkan Chart
         $chart = Hasil::all()->where('dosen_id', $dosenId->id);
-        foreach ($chart as $n) {
-            $jlhNilai = $n->nilai;
+
+        if (isEmpty($chart)) {
+            $jlhNilai = 0;
+        } else {
+            foreach ($chart as $n) {
+                $jlhNilai = $n->nilai;
+            }
         }
         $sangatBaik = $jlhNilai == 10;
         $baik = $jlhNilai <= 9.9;

@@ -49,6 +49,14 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/pdf/hasil', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
         Route::get('admin/pdf/mahasiswa', [AdminController::class, 'exportMahasiswa'])->name('export-pdf.mahasiswa');
 
+        // Routes Kelola Matakuliah
+        Route::get('admin/matakuliah', [AdminController::class, 'mk_index'])->name('admin-matakuliah.index');
+        Route::get('admin/matakuliah/create', [AdminController::class, 'mk_create'])->name('admin-matakuliah.create');
+        Route::post('admin/matakuliah/create', [AdminController::class, 'mk_save'])->name('admin-matakuliah.save');
+        Route::get('admin/matakuliah/detail/{id}', [AdminController::class, 'mk_show'])->name('admin-matakuliah.show');
+        Route::get('admin/matakuliah/delete/{id}', [AdminController::class, 'mk_destroy'])->name('admin-matakuliah.destroy');
+
+
 
         // Routes Kelola Pertanyaan
         Route::get('admin/pertanyaan', [AdminController::class, 'pertanyaan_index'])->name('admin-pertanyaan.index');

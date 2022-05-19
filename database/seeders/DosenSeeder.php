@@ -15,10 +15,10 @@ class DosenSeeder extends Seeder
     public function run()
     {
         Dosen::create([
-            'name' => 'Desvina Yulisda',
-            'nip' => '124714014012712',
+            'name' => 'Ananda Faridhatul Ulva',
+            'nip' => '12804581289',
             'prodi_id' => '8',
-            'user_id' => '2'
+            'user_id' => '2',
         ]);
     }
 }

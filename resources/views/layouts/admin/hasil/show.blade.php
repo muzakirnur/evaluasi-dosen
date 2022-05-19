@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
-
+    <hr>
     <div class="row row-cols-2 g-5">
         <div class="col-lg-4">
             <div class="mb-3">
@@ -24,19 +24,19 @@
         <div class="col-lg-4">
             <div class="mb-3">
                 <label for="Nama" class="form-label">Nama Dosen</label>
-                <input type="text" class="form-control" disabled value="{{ $data->dosen->name }}">
+                <input type="text" class="form-control" disabled value="{{ $data->matakuliah->dosen->name }}">
             </div>
             <div class="mb-3">
                 <label for="NIP" class="form-label">NIP</label>
-                <input type="text" class="form-control" disabled value="{{ $data->dosen->nip }}">
+                <input type="text" class="form-control" disabled value="{{ $data->matakuliah->dosen->nip }}">
             </div>
             <div class="mb-3">
                 <label for="Prodi" class="form-label">Prodi</label>
-                <input type="text" class="form-control" disabled value="{{ $data->dosen->prodi->name }}">
+                <input type="text" class="form-control" disabled value="{{ $data->matakuliah->dosen->prodi->name }}">
             </div>
             <div class="mb-3">
                 <label for="Email" class="form-label">Email</label>
-                <input type="text" class="form-control" disabled value="{{ $data->dosen->user->email }}">
+                <input type="text" class="form-control" disabled value="{{ $data->matakuliah->dosen->user->email }}">
             </div>
         </div>
         <div class="col-lg-4">
@@ -46,11 +46,9 @@
             </div>
             <div class="mb-3">
                 <label for="saran" class="form-label">Saran</label>
-                <textarea name="saran" id="saran" cols="10" rows="8" class="form-control"
-                    disabled>{{ $data->saran }}</textarea>
+                <textarea name="saran" id="saran" cols="10" rows="8" class="form-control" disabled>{{ $data->saran }}</textarea>
             </div>
         </div>
     </div>
     <button class="btn btn-light shadow" onclick="history.back(-1)">Kembali</button>
-
 @endsection

@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
+                <th scope="col">Matakuliah</th>
                 <th scope="col">Mahasiswa</th>
                 <th scope="col">Program Studi</th>
                 <th scope="col">Dosen</th>
@@ -26,9 +27,10 @@
             @foreach ($data as $key => $row)
                 <tr>
                     <th>{{ $data->firstItem() + $key }}</th>
+                    <td>{{ $row->matakuliah->matakuliah }}</td>
                     <td>{{ $row->mahasiswa->name }}</td>
                     <td>{{ $row->mahasiswa->prodi->name }}</td>
-                    <td>{{ $row->dosen->name }}</td>
+                    <td>{{ $row->matakuliah->dosen->name }}</td>
                     <td>{{ $row->nilai }}</td>
                     <td>{{ $row->saran }}</td>
                     <td>{{ $row->grade }}</td>

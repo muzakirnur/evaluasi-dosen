@@ -11,7 +11,10 @@ use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Exports\HasilExport;
+use App\Models\Matakuliah;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use JeroenNoten\LaravelAdminLte\Components\Form\Select;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
@@ -65,7 +68,12 @@ class AdminController extends Controller
         $page = "Detail Dosen";
         $dosen = Dosen::find($id);
         $user = User::where('id', $dosen->user_id)->first();
-        $data = Hasil::where('dosen_id', $dosen->id)->paginate(10);
+        $mk = DB::table('hasils')
+            ->select('*')
+            ->join('matakuliahs', 'hasil.matakuliah_id', '=', 'matakuliahs.id')
+            ->join('dosen', 'dosen.id', '=', 'matakuliahs.dosen_id', 'left');
+        // dd($mk);
+        $data = Hasil::where('matakuliah_id', $mk == $dosen->id)->paginate(10);
         $chart = Hasil::all()->where('dosen_id', $dosen->id);
         foreach ($chart as $n) {
             $jlhNilai = $n->nilai;
@@ -222,5 +230,42 @@ class AdminController extends Controller
         $pdf = PDF::loadView('layouts.pdf.mahasiswa', compact('data', 'page'));
         // dd($pdf);
         return $pdf->download('mahasiswa.pdf');
+    }
+
+    // Mengelola Matakuliah
+
+    public function mk_index()
+    {
+        $page = "Kelola Matakuliah";
+        $data = Matakuliah::paginate(10);
+        // dd($data);
+        return view('layouts.admin.matakuliah.index', compact('data', 'page'));
+    }
+
+    public function mk_create()
+    {
+        $page = "Tambah Matakuliah";
+        $prodi = Prodi::all();
+        $dosen = Dosen::all();
+        return view('layouts.admin.matakuliah.create', compact('dosen', 'prodi', 'page'));
+    }
+
+    public function mk_save(Request $request)
+    {
+        // dd($request);
+        Matakuliah::create([
+            'matakuliah' => $request->matakuliah,
+            'dosen_id' => $request->dosen,
+            'prodi_id' => $request->prodi,
+        ]);
+
+        return redirect()->route('admin-matakuliah.index')->with('success', 'Data Matakuliah Berhasil ditambahkan');
+    }
+
+    public function mk_show($id)
+    {
+        $page = "Detail Matakuliah";
+        $data = Matakuliah::find($id);
+        return view('layouts.admin.matakuliah.show', compact('page', 'data'));
     }
 }

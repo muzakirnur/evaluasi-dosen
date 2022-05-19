@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\Hasil;
 use App\Models\Mahasiswa;
+use App\Models\Matakuliah;
 use App\Models\Pertanyaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
@@ -31,10 +33,24 @@ class MahasiswaController extends Controller
     public function kuisioner_create()
     {
         $page = "Tambah Penilaian";
-        $prodiUser = Auth::user()->prodi_id;
-        $dosen = Dosen::where('prodi_id', $prodiUser)->get();
+        $user = Auth::user()->id;
+        $mahasiswa = Mahasiswa::where('user_id', $user)->first();
+        $hasil = Hasil::all()->where('mahasiswa_id', $mahasiswa->id);
+        $count = $hasil->count();
+        // dd($hasil->toArray());
+        if ($hasil->isEmpty()) {
+            $prodiUser = Auth::user()->prodi_id;
+            $matakuliah = Matakuliah::all()->where('prodi_id', $prodiUser);
+        } else {
+            foreach ($hasil as $h) {
+                $mkid = $h->matakuliah_id;
+            }
+            $prodiUser = Auth::user()->prodi_id;
+            $matakuliah = Matakuliah::all()->where('prodi_id', $prodiUser)->where('id', '!=', $mkid);
+        }
+
         $question = Pertanyaan::all();
-        return view('layouts.mahasiswa.kuisioner.create', compact('dosen', 'question', 'page'));
+        return view('layouts.mahasiswa.kuisioner.create', compact('matakuliah', 'question', 'page'));
     }
 
     public function kuisioner_save(Request $request)
@@ -67,7 +83,7 @@ class MahasiswaController extends Controller
 
         Hasil::create([
             'mahasiswa_id' => $idmhs->id,
-            'dosen_id' => $request->dosen_id,
+            'matakuliah_id' => $request->matakuliah,
             'nilai' => $nilai,
             'saran' => $request->saran,
             'grade' => $grade

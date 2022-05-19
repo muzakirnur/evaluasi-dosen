@@ -295,6 +295,13 @@ return [
             'can' => 'admin',
         ],
         [
+            'text'        => 'Kelola Matakuliah',
+            'url'         => 'admin/matakuliah',
+            'icon'        => 'fas fa-fw fa-book',
+            'label_color' => 'success',
+            'can' => 'admin',
+        ],
+        [
             'text'        => 'Kelola Pertanyaaan',
             'url'         => 'admin/pertanyaan',
             'icon'        => 'fas fa-fw fa-question',

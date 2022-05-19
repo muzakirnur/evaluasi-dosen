@@ -24,4 +24,9 @@ class Prodi extends Model
     {
         return $this->belongsTo(Dosen::class);
     }
+
+    public function matakuliah()
+    {
+        return $this->hasMany(Matakuliah::class);
+    }
 }

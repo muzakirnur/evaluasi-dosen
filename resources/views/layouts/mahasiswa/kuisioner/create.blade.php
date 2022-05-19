@@ -4,11 +4,11 @@
     <form action="{{ route('mahasiswa-kuisioner.save') }}" method="post">
         @csrf
         <div class="mb-3">
-            <label for="dosen">Pilih Dosen</label>
-            <select class="form-select" aria-label="Default select example" name="dosen_id">
+            <label for="dosen">Pilih Matakuliah</label>
+            <select class="form-select" aria-label="Default select example" name="matakuliah">
                 <option selected>-- Pilih --</option>
-                @foreach ($dosen as $row)
-                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                @foreach ($matakuliah as $row)
+                    <option value="{{ $row->id }}">{{ $row->matakuliah }} - {{ $row->dosen->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -45,7 +45,6 @@
                     </div>
                 </div>
             </div>
-
         @endforeach
         <div class="mb-3">
             <label for="saran" class="form-label">Saran</label>

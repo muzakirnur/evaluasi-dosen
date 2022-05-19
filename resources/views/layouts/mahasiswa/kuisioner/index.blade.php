@@ -17,6 +17,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
+                <th scope="col">Matakuliah</th>
                 <th scope="col">Dosen</th>
                 <th scope="col">Program Studi</th>
                 <th scope="col">Nilai</th>
@@ -27,8 +28,9 @@
             @foreach ($data as $row)
                 <tr>
                     <th>{{ $loop->iteration }}</th>
-                    <td>{{ $row->dosen->name }}</td>
-                    <td>{{ $row->dosen->prodi->name }}</td>
+                    <td>{{ $row->matakuliah->matakuliah }}</td>
+                    <td>{{ $row->matakuliah->dosen->name }}</td>
+                    <td>{{ $row->matakuliah->prodi->name }}</td>
                     <td> {{ $row->nilai }}</td>
                     <td> {{ $row->saran }}</td>
                 </tr>

@@ -17,8 +17,8 @@ class CreateHasilsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('mahasiswa_id')->unsigned();
             $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas')->onDelete('cascade')->onUpdate('cascade');
-            $table->bigInteger('dosen_id')->unsigned();
-            $table->foreign('dosen_id')->references('id')->on('dosens')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('matakuliah_id')->unsigned();
+            $table->foreign('matakuliah_id')->references('id')->on('matakuliahs')->onDelete('cascade')->onUpdate('cascade');
             $table->float('nilai');
             $table->longText('saran');
             $table->string('grade');
