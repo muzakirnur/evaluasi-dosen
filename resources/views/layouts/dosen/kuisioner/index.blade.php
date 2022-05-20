@@ -7,30 +7,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <div class="row row-cols-2 g-5">
-        <div class="col">
-            <a href="{{ route('dosen.export') }}" class="btn btn-primary mb-3">Download</a>
-            <table class="table">
-                <thead>
+    {{-- <div class="row row-cols-2 g-5"> --}}
+    <div class="col">
+        <a href="{{ route('dosen.export') }}" class="btn btn-primary mb-3">Download</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Matakuliah</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $row)
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Nilai</th>
-                        <th scope="col">Saran</th>
+                        <th>{{ $loop->iteration }}</th>
+                        <td> {{ $row->matakuliah }}</td>
+                        <td>
+                            <a href="{{ route('dosen-hasil.matakuliah', $row->id) }}" class="btn btn-primary">
+                                <i class="fas fa-fw fa-eye"></i>
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $row)
-                        <tr>
-                            <th>{{ $loop->iteration }}</th>
-                            <td> {{ $row->nilai }}</td>
-                            <td> {{ $row->saran }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $data->links() }}
-        </div>
-        <div class="col">
+                @endforeach
+            </tbody>
+        </table>
+        {{ $data->links() }}
+    </div>
+    {{-- <div class="col">
             <div class="card card-danger">
                 <div class="card-header">
                     <h3 class="card-title">Chart Penilaian Dosen</h3>
@@ -50,12 +54,11 @@
                 </div>
                 <!-- /.card-body -->
             </div>
-        </div>
+        </div> --}}
 
-    </div>
-
+    {{-- </div> --}}
 @endsection
-@section('js')
+{{-- @section('js')
     <script>
         var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
         var donutData = {
@@ -82,4 +85,4 @@
             options: donutOptions
         })
     </script>
-@stop
+@stop --}}

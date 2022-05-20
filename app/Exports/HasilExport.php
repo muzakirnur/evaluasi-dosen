@@ -11,7 +11,7 @@ class HasilExport implements FromQuery
 {
     use Exportable;
 
-    public function dosenId(int $id)
+    public function mkId(int $id)
     {
         $this->dosen_id = $id;
         return $this;
@@ -19,6 +19,6 @@ class HasilExport implements FromQuery
 
     public function query()
     {
-        return Hasil::query()->where('dosen_id', $this->dosen_id);
+        return Hasil::query()->where('matakuliah_id', $this->dosen_id);
     }
 }

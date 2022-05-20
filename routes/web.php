@@ -7,6 +7,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Dosen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +47,8 @@ Route::middleware('auth')->group(function () {
         // Route Kelola PDF
 
         Route::get('admin/pdf/dosen', [AdminController::class, 'exportDosen'])->name('export-pdf.dosen');
-        Route::get('admin/pdf/hasil', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
+        Route::get('admin/pdf/hasil/{id}', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
+        Route::get('admin/pdf/hasil/all', [AdminController::class, 'exportPDFall'])->name('export-pdf.all');
         Route::get('admin/pdf/mahasiswa', [AdminController::class, 'exportMahasiswa'])->name('export-pdf.mahasiswa');
 
         // Routes Kelola Matakuliah
@@ -55,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::post('admin/matakuliah/create', [AdminController::class, 'mk_save'])->name('admin-matakuliah.save');
         Route::get('admin/matakuliah/detail/{id}', [AdminController::class, 'mk_show'])->name('admin-matakuliah.show');
         Route::get('admin/matakuliah/delete/{id}', [AdminController::class, 'mk_destroy'])->name('admin-matakuliah.destroy');
+        Route::put('admin/matakuliah/detail/{id}/update', [AdminController::class, 'mk_update'])->name('admin-matakuliah.update');
 
 
 
@@ -72,8 +75,9 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/prodi/{id}', [AdminController::class, 'prodi_show'])->name('admin-prodi.show');
         Route::get('admin/prodi/delete/{id}', [AdminController::class, 'prodi_destroy'])->name('admin-prodi.destroy');
         // Route Kelola Hasil Evaluasi
+        Route::get('admin/hasil/matakuliah/{id}', [AdminController::class, 'hasil_matakuliah'])->name('admin-hasil.matakuliah');
         Route::get('admin/hasil', [AdminController::class, 'hasil_index'])->name('admin-hasil.index');
-        Route::get('admin/hasil/export', [AdminController::class, 'exportall'])->name('admin-hasil.download');
+        Route::get('admin/hasil/export/{id}', [AdminController::class, 'exportall'])->name('admin-hasil.download');
         Route::get('admin/hasil/{id}', [AdminController::class, 'hasil_show'])->name('admin-hasil.show');
         Route::get('admin/hasil/delete/{id}', [AdminController::class, 'hasil_destroy'])->name('admin-hasil.destroy');
     });
@@ -81,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['dosen'])->group(function () {
         Route::get('dosen/dashboard', [DosenController::class, 'index'])->name('dosen');
         Route::get('dosen/kuisioner/export', [DosenController::class, 'export'])->name('dosen.export');
-        // Routes Kelola Hasil Kuisioner
+        Route::get('dosen/kuisioner/matakuliah/{id}', [DosenController::class, 'hasil_matakuliah'])->name('dosen-hasil.matakuliah');
         Route::get('dosen/kuisioner', [DosenController::class, 'kuisioner_index'])->name('dosen-kuisioner.index');
     });
 

@@ -19,6 +19,7 @@
                 <th scope="col">Matakuliah</th>
                 <th scope="col">Program Studi</th>
                 <th scope="col">Dosen Pengampu</th>
+                <th scope="col">NIP</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -29,6 +30,7 @@
                     <td>{{ $row->matakuliah }}</td>
                     <td>{{ $row->prodi->name }}</td>
                     <td>{{ $row->dosen->name }}</td>
+                    <td>{{ $row->dosen->nip }}</td>
                     <td>
                         <div class="row row-cols-3">
                             <div class="col">

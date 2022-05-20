@@ -12,8 +12,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Exports\HasilExport;
 use App\Models\Matakuliah;
+use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use JeroenNoten\LaravelAdminLte\Components\Form\Select;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -68,29 +70,13 @@ class AdminController extends Controller
         $page = "Detail Dosen";
         $dosen = Dosen::find($id);
         $user = User::where('id', $dosen->user_id)->first();
-        $mk = DB::table('hasils')
-            ->select('*')
-            ->join('matakuliahs', 'hasil.matakuliah_id', '=', 'matakuliahs.id')
-            ->join('dosen', 'dosen.id', '=', 'matakuliahs.dosen_id', 'left');
+        $mk = Matakuliah::all()->where('dosen_id', $dosen->id);
+        // $hasil = Hasil::find('matakuliah_id', $mk->id);
         // dd($mk);
-        $data = Hasil::where('matakuliah_id', $mk == $dosen->id)->paginate(10);
-        $chart = Hasil::all()->where('dosen_id', $dosen->id);
-        foreach ($chart as $n) {
-            $jlhNilai = $n->nilai;
-        }
-        $sangatBaik = $jlhNilai == 10;
-        $baik = $jlhNilai <= 9.9;
-        $cukup = $jlhNilai <= 8.9;
-        $kurangBaik = $jlhNilai <= 7.9;
-        $sangatKurangBaik = $jlhNilai <= 6.9;
-
-        $dataSb = $chart->where('nilai', 10)->count();
-        $dataB = $chart->whereBetween('nilai', [9, 9.9])->count();
-        $dataC = $chart->whereBetween('nilai', [8, 8.9])->count();
-        $dataKb = $chart->whereBetween('nilai', [7, 7.9])->count();
-        $dataSkb = $chart->whereBetween('nilai', [6, 6.9])->count();
+        // $data = Hasil::where('matakuliah_id', $mk == $dosen->id)->paginate(10);
         // dd($sangatBaik);
-        return view('layouts.admin.dosen.show', compact('page', 'dosen', 'data', 'user', 'dataSb', 'dataB', 'dataC', 'dataKb', 'dataSkb'));
+        // return view('layouts.admin.dosen.show', compact('page', 'dosen', 'data', 'user', 'dataSb', 'dataB', 'dataC', 'dataKb', 'dataSkb'));
+        return view('layouts.admin.dosen.show', compact('page', 'user', 'mk', 'dosen'));
     }
 
     // Fungsi Kelola Pertanyaan
@@ -136,6 +122,30 @@ class AdminController extends Controller
     }
 
     // Fungsi untuk Hasil Evaluasi
+    public function hasil_matakuliah()
+    {
+        $cid = request()->segment(4);
+        $judul = Matakuliah::find($cid);
+        $data = Hasil::where('matakuliah_id', $cid)->paginate(10);
+        $page = "Hasil Evaluasi Matakuliah " . $judul->matakuliah;
+        $chart = Hasil::all()->where('matakuliah_id', $cid);
+        foreach ($chart as $n) {
+            $jlhNilai = $n->nilai;
+        }
+        $sangatBaik = $jlhNilai == 10;
+        $baik = $jlhNilai <= 9.9;
+        $cukup = $jlhNilai <= 8.9;
+        $kurangBaik = $jlhNilai <= 7.9;
+        $sangatKurangBaik = $jlhNilai <= 6.9;
+
+        $dataSb = $chart->where('nilai', 10)->count();
+        $dataB = $chart->whereBetween('nilai', [9, 9.9])->count();
+        $dataC = $chart->whereBetween('nilai', [8, 8.9])->count();
+        $dataKb = $chart->whereBetween('nilai', [7, 7.9])->count();
+        $dataSkb = $chart->whereBetween('nilai', [6, 6.9])->count();
+        // dd($uri);
+        return view('layouts.admin.hasil.matakuliah', compact('data', 'page', 'dataSb', 'dataB', 'dataC', 'dataKb', 'dataSkb'));
+    }
 
     public function hasil_index()
     {
@@ -196,13 +206,27 @@ class AdminController extends Controller
 
     public function export($id)
     {
-        $dosen = Dosen::find($id);
-        return (new HasilExport)->dosenId($dosen->id)->download('hasil_dosen.xlsx');
+        $dosen = request()->segment(4);
+        $int = (int)$dosen;
+        // dd($dosen);
+        return (new HasilExport)->mkId($int)->download('hasil_matakuliah.xlsx');
     }
 
-    public function exportall()
+    public function exportall($id)
     {
-        return Excel::download(new EvaluasiExport, 'evaluasi.xlsx');
+        $dosen = request()->segment(4);
+        $int = (int)$dosen;
+        // dd($int);
+        return (new HasilExport)->mkId($int)->download('hasil_matakuliah.xlsx');
+    }
+
+    public function exportPDFall()
+    {
+        $page = "Data Hasil Evaluasi";
+        $data = Hasil::all();
+        $pdf = PDF::loadView('layouts.pdf.hasil', compact('data', 'page'));
+        // dd($pdf);
+        return $pdf->download('hasil.pdf');
     }
 
     public function exportDosen()
@@ -214,10 +238,11 @@ class AdminController extends Controller
         return $pdf->download('dosen.pdf');
     }
 
-    public function exportHasil()
+    public function exportHasil($id)
     {
+        $id = request()->segment(4);
         $page = "Data Hasil Evaluasi";
-        $data = Hasil::all();
+        $data = Hasil::all()->where('matakuliah_id', $id);
         $pdf = PDF::loadView('layouts.pdf.hasil', compact('data', 'page'));
         // dd($pdf);
         return $pdf->download('hasil.pdf');
@@ -265,7 +290,19 @@ class AdminController extends Controller
     public function mk_show($id)
     {
         $page = "Detail Matakuliah";
+        $prodi = Prodi::all();
+        $dosen = Dosen::all();
         $data = Matakuliah::find($id);
-        return view('layouts.admin.matakuliah.show', compact('page', 'data'));
+        return view('layouts.admin.matakuliah.show', compact('page', 'data', 'prodi', 'dosen'));
+    }
+
+    public function mk_update($id, Request $request)
+    {
+        Matakuliah::find($id)->update([
+            'matakuliah' => $request->matakuliah,
+            'prodi_id' => $request->prodi,
+            'dosen_id' => $request->dosen,
+        ]);
+        return redirect()->route('admin-matakuliah.index')->with('success', 'Data Berhasil di Update');
     }
 }

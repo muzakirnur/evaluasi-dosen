@@ -16,8 +16,7 @@
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama</th>
-                <th scope="col">NIM</th>
-                <th scope="col">Program Studi</th>
+                <th scope="col">NIP</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -27,7 +26,6 @@
                     <th>{{ $data->firstItem() + $key }}</th>
                     <td>{{ $row->name }}</td>
                     <td>{{ $row->nip }}</td>
-                    <td>{{ $row->prodi->name }}</td>
                     <td>
                         <div class="row row-cols-5">
                             <div class="col">
