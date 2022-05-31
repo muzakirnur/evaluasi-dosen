@@ -7,7 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <a href="{{ route('admin-hasil.download', request()->segment(4)) }}" class="btn btn-primary mb-3">Download</a>
+    <a href="{{ route('admin-hasil.download', request()->segment(4)) }}" class="btn btn-success mb-3">Export Excel</a>
     <a href="{{ route('export-pdf.hasil', request()->segment(4)) }}" class="btn btn-danger mb-3">Export PDF</a>
     <table class="table">
         <thead>
@@ -67,6 +67,18 @@
             <div class="card-body">
                 <canvas id="donutChart"
                     style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <p>Nilai Rata Rata = {{ $data->sum('nilai') / $data->count() }}</p>
+                @if ($data->sum('nilai') / $data->count() == 10)
+                    <p>Grade = Sangat Baik</p>
+                @elseif ($data->sum('nilai') / $data->count() <= 9.9)
+                    <p>Grade = Baik</p>
+                @elseif ($data->sum('nilai') / $data->count() <= 8.9)
+                    <p>Grade = Cukup</p>
+                @elseif ($data->sum('nilai') / $data->count() <= 7.9)
+                    <p>Grade = Kurang Baik</p>
+                @elseif ($data->sum('nilai') / $data->count() <= 6.9)
+                    <p>Grade = Sangat Kurang Baik</p>
+                @endif
             </div>
             <!-- /.card-body -->
         </div>

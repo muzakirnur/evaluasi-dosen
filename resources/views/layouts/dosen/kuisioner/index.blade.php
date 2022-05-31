@@ -9,7 +9,7 @@
     @endif
     {{-- <div class="row row-cols-2 g-5"> --}}
     <div class="col">
-        <a href="{{ route('dosen.export') }}" class="btn btn-primary mb-3">Download</a>
+        {{-- <a href="{{ route('dosen.export') }}" class="btn btn-primary mb-3">Download</a> --}}
         <table class="table">
             <thead>
                 <tr>

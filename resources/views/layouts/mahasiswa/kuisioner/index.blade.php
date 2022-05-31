@@ -20,7 +20,6 @@
                 <th scope="col">Matakuliah</th>
                 <th scope="col">Dosen</th>
                 <th scope="col">Program Studi</th>
-                <th scope="col">Nilai</th>
                 <th scope="col">Saran</th>
             </tr>
         </thead>
@@ -31,7 +30,6 @@
                     <td>{{ $row->matakuliah->matakuliah }}</td>
                     <td>{{ $row->matakuliah->dosen->name }}</td>
                     <td>{{ $row->matakuliah->prodi->name }}</td>
-                    <td> {{ $row->nilai }}</td>
                     <td> {{ $row->saran }}</td>
                 </tr>
             @endforeach

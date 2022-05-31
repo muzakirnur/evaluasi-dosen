@@ -33,6 +33,14 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'profile_index'])->name('profile.index');
     Route::put('profile/update/{id}', [ProfileController::class, 'profile_update'])->name('profile.update');
     Route::get('chart', [AdminController::class, 'chart'])->name('chart.index');
+    // Route Kelola PDF
+
+    Route::get('admin/pdf/dosen', [AdminController::class, 'exportDosen'])->name('export-pdf.dosen');
+    Route::get('admin/pdf/hasil/{id}', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
+    Route::get('admin/pdf/hasil/all', [AdminController::class, 'exportPDFall'])->name('export-pdf.all');
+    Route::get('admin/pdf/mahasiswa', [AdminController::class, 'exportMahasiswa'])->name('export-pdf.mahasiswa');
+    Route::get('admin/hasil/export/{id}', [AdminController::class, 'exportall'])->name('admin-hasil.download');
+
 
     Route::middleware(['admin'])->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin');
@@ -44,12 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::get('admin/dosen', [AdminController::class, 'dosen_index'])->name('admin-dosen.index');
         Route::get('admin/dosen/{id}', [AdminController::class, 'dosen_show'])->name('admin-dosen.show');
         Route::get('admin/dosen/{id}/export', [AdminController::class, 'export'])->name('admin-dosen.export');
-        // Route Kelola PDF
 
-        Route::get('admin/pdf/dosen', [AdminController::class, 'exportDosen'])->name('export-pdf.dosen');
-        Route::get('admin/pdf/hasil/{id}', [AdminController::class, 'exportHasil'])->name('export-pdf.hasil');
-        Route::get('admin/pdf/hasil/all', [AdminController::class, 'exportPDFall'])->name('export-pdf.all');
-        Route::get('admin/pdf/mahasiswa', [AdminController::class, 'exportMahasiswa'])->name('export-pdf.mahasiswa');
 
         // Routes Kelola Matakuliah
         Route::get('admin/matakuliah', [AdminController::class, 'mk_index'])->name('admin-matakuliah.index');
@@ -77,7 +80,6 @@ Route::middleware('auth')->group(function () {
         // Route Kelola Hasil Evaluasi
         Route::get('admin/hasil/matakuliah/{id}', [AdminController::class, 'hasil_matakuliah'])->name('admin-hasil.matakuliah');
         Route::get('admin/hasil', [AdminController::class, 'hasil_index'])->name('admin-hasil.index');
-        Route::get('admin/hasil/export/{id}', [AdminController::class, 'exportall'])->name('admin-hasil.download');
         Route::get('admin/hasil/{id}', [AdminController::class, 'hasil_show'])->name('admin-hasil.show');
         Route::get('admin/hasil/delete/{id}', [AdminController::class, 'hasil_destroy'])->name('admin-hasil.destroy');
     });
