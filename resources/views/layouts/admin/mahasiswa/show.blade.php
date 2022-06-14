@@ -51,8 +51,8 @@
             @foreach ($data as $row)
                 <tr>
                     <th>{{ $loop->iteration }}</th>
-                    <td>{{ $row->dosen->name }}</td>
-                    <td>{{ $row->dosen->prodi->name }}</td>
+                    <td>{{ $row->matakuliah->dosen->name }}</td>
+                    <td>{{ $row->matakuliah->dosen->prodi->name }}</td>
                     <td>{{ $row->nilai }}</td>
                     <td>{{ $row->saran }}</td>
                     <td>
@@ -72,7 +72,4 @@
         {{ $data->links() }}
     </div>
     <button class="btn btn-primary" onclick="history.back(-1)"><i class="fas fa-fw fa-arrow-left"></i> Kembali</button>
-
-
-
 @endsection

@@ -12,7 +12,7 @@
         </div>
         <div class="mb-3">
             <label for="dosen" class="form-label">Porgram Studi</label>
-            <select class="form-select" aria-label="Default select example" name="dosen" required>
+            <select class="form-select" aria-label="Default select example" name="prodi" required>
                 <option value="{{ $data->prodi_id }}" selected>{{ $data->prodi->name }}</option>
                 @foreach ($prodi as $row)
                     <option value="{{ $row->id }}">{{ $row->name }}</option>

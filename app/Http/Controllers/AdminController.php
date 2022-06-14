@@ -305,4 +305,10 @@ class AdminController extends Controller
         ]);
         return redirect()->route('admin-matakuliah.index')->with('success', 'Data Berhasil di Update');
     }
+
+    public function mk_destroy($id)
+    {
+        Matakuliah::destroy($id);
+        return redirect()->route('admin-matakuliah.index')->with('success', 'Data Berhasil di Hapus');
+    }
 }
